@@ -41,7 +41,6 @@ Todo el contenido está escrito para leerse sin conocimientos previos y cada res
 - **La herramienta:** https://build.barraca.house/punto-atencion-ciudadana/como-voto-b
 - **La plataforma completa:** https://build.barraca.house/punto-atencion-ciudadana/
 - **El repositorio original**, archivado en solo lectura por la organización: https://github.com/barracafh/build-como-voto-b
-- **Este fork**, con la documentación y los créditos del equipo: https://github.com/lruicas/build-como-voto-b
 
 El chat funciona con las claves del evento hasta el **30 de noviembre de 2026**. Después, la guía, el simulador y el mapa siguen disponibles, pero las respuestas de Votón necesitan una clave propia.
 
@@ -54,8 +53,6 @@ El chat funciona con las claves del evento hasta el **30 de noviembre de 2026**.
 - Pedro de Luna Huerta ([@Pedrodeluna](https://github.com/Pedrodeluna))
 - Pablo Santana ([@NegativeAlpha88](https://github.com/NegativeAlpha88))
 - Lara Ruiz Casado ([@lruicas](https://github.com/lruicas))
-
-El código se publicó en el repositorio del evento, que quedó archivado en solo lectura y no permite pull requests. Este fork existe para poder continuar el proyecto y dejar por escrito quién lo hizo. Las contribuciones de esta copia se pueden consultar en [la gráfica del repositorio](https://github.com/lruicas/build-como-voto-b/graphs/contributors).
 
 ## Cómo está montado
 
@@ -76,7 +73,16 @@ bun run build
 
 Para el chat en local hacen falta `HELMCODE_API_KEY` y `HELMCODE_MODEL` en `.env.local`; `FACTCHECK_API_KEY` es opcional. Las claves no se suben al repositorio ni llevan el prefijo `NEXT_PUBLIC_`.
 
-El contenido vive en `contexto.md` y `src/datos/`; los textos de cada pieza, en `src/app/`. Las reglas de diseño y las de la plataforma están en [AGENTS.md](AGENTS.md), y el reto del track, en [SETUP.md](SETUP.md). El diseño parte de Sol, el sistema visual de Reforma Digital: el origen y la licencia están en [AVISO.md](AVISO.md).
+El contenido vive en `contexto.md` y `src/datos/`; los textos de cada pieza, en `src/app/`. Las reglas de diseño y las de la plataforma están en [AGENTS.md](AGENTS.md), y el reto del track, en [SETUP.md](SETUP.md). El detalle del chat (corpus, búsqueda híbrida, citas comprobadas y límites de uso) está en [docs/chat.md](docs/chat.md). El diseño parte de Sol, el sistema visual de Reforma Digital: el origen y la licencia están en [AVISO.md](AVISO.md).
+
+### Estructura
+
+- `src/app/`: páginas y rutas de API; cada pieza tiene su carpeta (`como-votar/`, `bulos/`, `escrutinio/`, `escanos/` y `mapa/`).
+- `src/components/`: interfaz del chat, el simulador, el hemiciclo y Votón.
+- `src/lib/`: lógica de D'Hondt, del mapa, del hemiciclo y de la recuperación del chat.
+- `src/datos/`: contenido estructurado, resultados de 2023 y embeddings.
+- `pruebas/`: bancos de evaluación del chat y el script que los mide.
+- `contexto.md`, `datos/` y `comun/`: material de la organización; no se edita.
 
 ## Datos, fuentes y privacidad
 
@@ -86,16 +92,13 @@ El contenido vive en `contexto.md` y `src/datos/`; los textos de cada pieza, en 
 - El chat tiene una batería de 458 casos en `pruebas/banco-*.json` (contenido, preguntas adversarias, fechas y bulos). Se lanza con `bun pruebas/evaluar.mjs` y respeta los límites de peticiones del servidor.
 - No se habla de partidos, candidaturas ni encuestas, y no se recomienda el voto.
 
-## Qué falta para producción
+## Créditos
 
-Esto es el código tal como quedó tras la noche. Para convertirlo en un servicio público de verdad faltaría:
+- **Organización:** BARRACA y SOTI, con Flywire como sede del build night.
+- **Diseño:** Sol, el sistema visual de [Reforma Digital](https://reforma-digital.es), usado con permiso de su autor. Los tokens y componentes de partida, con su licencia MIT, están en [AVISO.md](AVISO.md).
+- **Contenido:** el marco de conocimiento del track y las fuentes oficiales que se citan en cada pieza.
 
-- **Claves y coste propios.** La IA del evento caduca el 30 de noviembre de 2026; haría falta una cuenta y un presupuesto de modelo sostenibles.
-- **Revalidar el calendario.** Plazos, supuestos y enlaces están atados al 29-N de 2026. Para otra convocatoria hay que actualizar fechas, fuentes y la ficha antes de publicar.
-- **Revisión editorial y legal.** Contrastar cada dato con la versión vigente de la LOREG y del calendario de la JEC, y revisar el aviso de no oficialidad y la política de privacidad.
-- **Accesibilidad con personas usuarias.** Hay enlace de salto, foco visible, contraste y movimiento reducido, pero falta una auditoría real con lectores de pantalla y pruebas con personas con discapacidad.
-- **Más pruebas del chat.** La batería actual acierta entre el 90 % y el 94 %; antes de producción convendría ampliarla y medir también latencia y coste.
-- **Dominio y despliegue propios.** Ahora vive en `build.barraca.house`; un servicio real necesitaría su dominio, su analítica mínima y su plan de mantenimiento.
+Gracias también a quienes organizaron y acompañaron la noche, y a los otros cinco equipos de la plataforma.
 
 ## Licencia
 
